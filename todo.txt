@@ -1,0 +1,46 @@
+TECHNO
+symfony5
+React
+Mercure
+    https://symfony.com/doc/current/mercure.html
+
+LOTS
+    1
+    2
+
+
+inviter quelqu'un
+On peut jouer hors ligne
+partie
+resultats
+IA
+page d'acueil
+    image d'awaler (en gros)
+    lancer une partie (en gros)
+    rechercher un adversaire (en gros)
+	mire de connexion/inscription (en moyen)
+	phrase d'accroche
+	lien vers les règles
+	lien vers l'auteur
+
+SCHEMA
+user
+    id
+    uuid
+    username
+    email
+    role (GUEST, USER, ADMIN, JAIL)
+    date_creation
+
+partie
+    id
+    uuid
+    status (pending, ready, en cours, terminée)
+    winner_user_id
+    plateau (case en json)
+
+joueur
+    id
+    partie_id
+    user_id
+    prise (nombre de pierre prise)
