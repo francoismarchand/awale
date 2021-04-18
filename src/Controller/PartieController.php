@@ -1,30 +1,47 @@
 <?php
 namespace App\Controller;
 
+use App\Factory\PartieFactory;
+use App\Repository\PartieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class PartieController extends AbstractController
 {
     /**
-     * @Route("/partie/creer", name="partie")
+     * @Route("/partie/{uuid}", name="partie")
      */
-    public function creer(): Response
+    public function partie(string $uuid, PartieRepository $partieRepository, SerializerInterface $serializer): Response
     {
-        //TODO
-        return $this->render('partie/creer.html.twig');
+        $partie = $partieRepository->findOneBy(['uuid' => $uuid]);
+        if (null === $partie) {
+            $this->createNotFoundException('Partie non trouvée');
+        }
+
+        return $this->render('partie.html.twig', [
+            'partie' => $partie,
+            'joueur' => 0, //TODO voir comment on détermine le joueur courant
+            'url' => 'ws://127.0.0.1:8081',//TODO paramètre
+        ]);
     }
 
     /**
-     * @Route("/partie/{uuid}", name="partie")
+     * @Route("/partie/creer", name="create_partie", priority=10)
      */
-    public function partie(string $uuid): Response
+    public function creer(PartieFactory $partieFactory, EntityManagerInterface $entityManager): Response
     {
-        $partie;//TODO load partie
+        //TODO récupérer le use courant (même guest)
+        //TODO choisi aléatoirement le joueur qui commence
+	    $partie = $partieFactory->create();
+        $entityManager->persist($partie);
+        $entityManager->flush();
 
-        return $this->render('partie.html.twig', [
-            'partie' => $partie
-        ]);
+        return $this->redirectToRoute('partie', ['uuid' => $partie->getUuid()]);
     }
 }

@@ -1,13 +1,7 @@
 TECHNO
 symfony5
 React
-Mercure
-    https://symfony.com/doc/current/mercure.html
-
-LOTS
-    1
-    2
-
+Websocket
 
 inviter quelqu'un
 On peut jouer hors ligne
@@ -44,3 +38,5 @@ joueur
     partie_id
     user_id
     prise (nombre de pierre prise)
+
+quand deux utilisateur ont rejoint la partie, un 3eme ne peut pas rentrer

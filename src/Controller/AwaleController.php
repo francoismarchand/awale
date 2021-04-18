@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class GameController extends AbstractController
+class AwaleController extends AbstractController
 {
     /**
      * @Route("/play/{case}", name="play")

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=PartieRepository::class)
  */
-class Partie
+class Partie implements \JsonSerializable
 {
     const STATUS_PREPARE = 1;
     const STATUS_READY = 2;
@@ -37,6 +37,11 @@ class Partie
     private $status;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $currentPlayer;
+
+    /**
     * @ORM\ManyToOne(targetEntity="User")
     * @ORM\JoinColumn(name="winner_user_id", referencedColumnName="id", nullable=true)
     */
@@ -45,13 +50,30 @@ class Partie
     /**
      * @ORM\Column(type="json")
      */
-    private $plateau = [];
+    private $scores;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $board = [];
 
     /**
      * @ORM\Column(type="date")
      */
     private $date_creation;
 
+
+
+
+    public function __construct()
+    {
+        $this->status = self::STATUS_PREPARE;
+        $this->currentPlayer = self::PLAYER_1;
+        $this->scores = [
+            self::PLAYER_1 => 0,
+            self::PLAYER_2 => 0,
+        ];
+    }
 
     public function getId(): ?int
     {
@@ -82,6 +104,19 @@ class Partie
         return $this;
     }
 
+    public function getCurrentPlayer(): int
+    {
+        return $this->currentPlayer;
+    }
+
+    public function setCurrentPlayer(int $currentPlayer): self
+    {
+        $this->currentPlayer = $currentPlayer;
+        
+
+        return $this;
+    }
+
     public function getWinner(): ?User
     {
         return $this->winner;
@@ -94,14 +129,33 @@ class Partie
         return $this;
     }
 
-    public function getPlateau(): ?array
+    public function getScores(): array
     {
-        return $this->platon;
+        return $this->scores;
     }
 
-    public function setPlateau(array $platon): self
+    public function setScores(array $scores): self
     {
-        $this->platon = $platon;
+        $this->scores = $scores;
+
+        return $this;
+    }
+
+    public function addScore(int $player, int $points): self
+    {
+        $this->scores[$player] += $points;
+
+        return $this;
+    }
+
+    public function getBoard(): ?array
+    {
+        return $this->board;
+    }
+
+    public function setBoard(array $board): self
+    {
+        $this->board = $board;
 
         return $this;
     }
@@ -116,5 +170,14 @@ class Partie
         $this->date_creation = $date_creation;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'status' => $this->status,
+            'board' => $this->board,
+            'scores' => $this->scores
+        ];
     }
 }
