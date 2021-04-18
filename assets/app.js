@@ -7,5 +7,8 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
+
+import './js/board.js';
+import './js/awale.js';
 // start the Stimulus application
 import './bootstrap';

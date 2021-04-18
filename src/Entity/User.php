@@ -4,13 +4,16 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface
 {
+    const ROLE_GUEST = 'ROLE_GUEST';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,6 +30,11 @@ class User
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=16)
@@ -67,6 +75,18 @@ class User
         return $this;
     }
 
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
     public function getRole(): ?string
     {
         return $this->role;
@@ -77,6 +97,21 @@ class User
         $this->role = $role;
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return [$this->role];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
     }
 
     public function getDateCreation(): ?\DateTimeInterface

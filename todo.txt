@@ -1,13 +1,6 @@
-TECHNO
-symfony5
-React
-Mercure
-    https://symfony.com/doc/current/mercure.html
-
-LOTS
-    1
-    2
-
+Ne pas afficher le board tant que qu'on est en waiting
+Système pour proposer de terminer la partie, à confirmer par l'adversaire
+Gérer le cas où l'adversaire n'a pas de pierre pour jouer
 
 inviter quelqu'un
 On peut jouer hors ligne
@@ -22,25 +15,3 @@ page d'acueil
 	phrase d'accroche
 	lien vers les règles
 	lien vers l'auteur
-
-SCHEMA
-user
-    id
-    uuid
-    username
-    email
-    role (GUEST, USER, ADMIN, JAIL)
-    date_creation
-
-partie
-    id
-    uuid
-    status (pending, ready, en cours, terminée)
-    winner_user_id
-    plateau (case en json)
-
-joueur
-    id
-    partie_id
-    user_id
-    prise (nombre de pierre prise)

@@ -51,7 +51,7 @@ a:hover {
     color: $color-primary-3;
 }
 
-.plateau {
+.board {
     width: 585px;
     height: 190px;
     margin: 48px auto;
@@ -66,18 +66,35 @@ a:hover {
         height: 90px;
         box-sizing: border-box;
 
-        .case {
+        .hole {
+            position: relative;
             display: inline-block;
             width: 80px;
             height: 80px;
             border-radius: 40px;
             margin: 0 5px;
             background-color: $color-primary-4;
+            border: none;
             cursor: pointer;
+
+            .stone {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                width: 20px;
+                height: 20px;
+                border-radius: 10px;
+                background-color: #555555;
+                color: white;
+            }
         }
 
-        .case:hover, .case:active {
+        .hole:hover {
             background-color: $color-primary-3;
+        }
+
+        .hole:active {
+            background-color: $color-primary-2;
         }
     }
 }
