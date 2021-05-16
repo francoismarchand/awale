@@ -1,25 +1,30 @@
 <?php
 namespace App\Game;
 
-use App\Entity\Partie;
+use App\Entity\Game;
 
 class AwaleGame
 {
     const NB_CASES = 12;
 
-    public function play(Partie $partie, int $player, int $case): Partie
+    public function play(Game $game, int $player, int $case): Game
     {
-        $partie = $this->move($partie, $player, $case);
-        $partie = $this->calculateWinner($partie);
+        //TODO vérifications
+            //Biens les cases du joueurs courant
+            //case non vide
 
-        return $partie;
+        $game = $this->move($game, $player, $case);
+        $game = $this->changeCurrentPlayer($game);
+        $game = $this->calculateWinner($game);
+
+        return $game;
     }
 
     //gestion du déplacement
-    private function move(Partie $partie, int $player, int $case): Partie
+    private function move(Game $game, int $player, int $case): Game
     {
         $handPosition = 0;
-        $board = $partie->getBoard();
+        $board = $game->getBoard();
         $nbStones = $board[$case];
         $nbLaps = \floor($nbStones / self::NB_CASES);
 
@@ -38,36 +43,46 @@ class AwaleGame
             }        
         }
 
-        $partie->setBoard($board);
+        $game->setBoard($board);
 
-        $partie = $this->eat($partie, $player, $handPosition);
-        //TODO on change le joueur courant
+        $game = $this->eat($game, $player, $handPosition);
 
-        return $partie;
+        return $game;
     }
 
     //Gestion des pions mangés
-    private function eat(Partie $partie, int $currentPlayer, int $handPosition): Partie
+    private function eat(Game $game, int $currentPlayer, int $handPosition): Game
     {
-        $board = $partie->getBoard();
+        $board = $game->getBoard();
 
         while(
             ($board[$handPosition] == 2 || $board[$handPosition] == 3)// si on deux ou trois pierres
             &&
             ($currentPlayer == 0 && $handPosition > 5 || $currentPlayer == 1 && $handPosition < 6)//Et qu'on est du bon côté du plateau en fonction du joueur courant
          ) {
-            $partie->addScore($currentPlayer, $board[$handPosition]);
+            $game->addScore($currentPlayer, $board[$handPosition]);
             $board[$handPosition] = 0;
             $handPosition--;
         }
 
-        return $partie->setBoard($board);
+        return $game->setBoard($board);
     }
 
-    private function calculateWinner(Partie $partie): Partie
+    private function changeCurrentPlayer(Game $game)
+    {
+        if ($game->getCurrentPlayer() == Game::PLAYER_1) {
+            return $game->setCurrentPlayer(Game::PLAYER_2);
+        }
+
+        if ($game->getCurrentPlayer() == Game::PLAYER_2) {
+            return $game->setCurrentPlayer(Game::PLAYER_1);
+        }
+    }
+
+    private function calculateWinner(Game $game): Game
     {
         //TODO
         //en fonction du board
-        return $partie;
+        return $game;
     }
 }

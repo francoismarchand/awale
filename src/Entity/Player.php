@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Partie;
+use App\Entity\Game;
 use App\Entity\User;
-use App\Repository\JoueurRepository;
+use App\Repository\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=JoueurRepository::class)
+ * @ORM\Entity(repositoryClass=PlayerRepository::class)
  */
-class Joueur
+class Player
 {
     /**
      * @ORM\Id
@@ -20,10 +20,10 @@ class Joueur
     private $id;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Partie")
-    * @ORM\JoinColumn(name="partie_id", referencedColumnName="id")
+    * @ORM\ManyToOne(targetEntity="Game")
+    * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
     */
-    private $partie;
+    private $game;
 
     /**
     * @ORM\ManyToOne(targetEntity="User")
@@ -34,21 +34,21 @@ class Joueur
     /**
      * @ORM\Column(type="integer")
      */
-    private $prise;
+    private $score;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPartie(): ?Partie
+    public function getGame(): ?Game
     {
-        return $this->partie;
+        return $this->game;
     }
 
-    public function setPartie(Partie $partie): self
+    public function setGame(Game $game): self
     {
-        $this->partie = $partie;
+        $this->game = $game;
 
         return $this;
     }
@@ -65,14 +65,14 @@ class Joueur
         return $this;
     }
 
-    public function getPrises(): ?int
+    public function getScore(): ?int
     {
-        return $this->user;
+        return $this->score;
     }
 
-    public function setPrises(int $prises): self
+    public function setScore(int $score): self
     {
-        $this->prises = $prises;
+        $this->score = $score;
 
         return $this;
     }

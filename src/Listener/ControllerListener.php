@@ -1,6 +1,7 @@
 <?php
 namespace App\EventListener;
 
+use App\Entity\User;
 use App\Factory\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -37,15 +38,24 @@ class ControllerListener
         $user = $this->security->getUser();
 
         if (null === $user) {
-            $newUser = $this->userFactory->createGuestUser();
-            $this->entityManager->persist($newUser);
-            $this->entityManager->flush();
-
-            $token = new UsernamePasswordToken($newUser, null, 'main', $newUser->getRoles());
-            $this->tokenStorage->setToken($token);
-            $this->session->set('_security_main', \serialize($token));
-
-            //TODO BUG l'ustilisateur n'est pas loggé en session
+            $newUser = $this->createGuestUser();
+            $this->loginUser($newUser);
         }
     }
+
+    private function createGuestUser(): User
+    {
+        $newUser = $this->userFactory->createGuestUser();
+        $this->entityManager->persist($newUser);
+        $this->entityManager->flush();
+
+        return $newUser;
+    }
+
+    private function loginUser(User $user): void
+    {
+        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_main', \serialize($token));
+}
 }

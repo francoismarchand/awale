@@ -1,15 +1,15 @@
 <?php
 namespace App\Factory;
 
-use App\Entity\Partie;
+use App\Entity\Game;
 
-class PartieFactory
+class GameFactory
 {
-    public function create(): Partie
+    public function create(): Game
     {
-        return (new Partie())
+        return (new Game())
             ->setUuid(\uniqid() . \uniqid())
-            ->setStatus(Partie::STATUS_PREPARE)
+            ->setStatus(Game::STATUS_WAITING)
             ->setBoard([
                 0 => 4,
                 1 => 4,

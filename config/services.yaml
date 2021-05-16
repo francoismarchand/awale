@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     ws_awale_port: '%env(string:WS_AWALE_PORT)%'
+    ws_awale_host: '%env(string:WS_AWALE_HOST)%'
+    ws_awale_url: '%env(string:WS_AWALE_URL)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -37,6 +39,10 @@ services:
     App\Command\AwaleServerCommand:
         arguments:
             $awaleServerPort: '%ws_awale_port%'
+
+    App\Client\WsClient:
+        arguments:
+            $awaleServerUrl: '%ws_awale_url%'
 
     App\EventListener\ControllerListener:
         tags:
