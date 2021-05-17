@@ -58,12 +58,17 @@ class Game extends React.Component {
     onClick(holePlayed) {        
         this.webSocket.send(JSON.stringify({
             'game': this.props.uuid, 
+<<<<<<< HEAD
             'player': 1, 
+=======
+            'player': this.state.currentPlayer, 
+>>>>>>> 24146e3ea280e959c43cea80e2475f682c3f2efb
             'case': holePlayed,
             'action': 'play'
         }));
     }
 
+<<<<<<< HEAD
     calculateWinner() {//TODO à virer, fait en back
         if (this.state.scores[0] > 24) {
             return 'Joueur 1';
@@ -78,6 +83,18 @@ class Game extends React.Component {
 
     render() {
         const winner = this.calculateWinner();//TODO à virer fait en back
+=======
+    render() {
+
+        if (this.state.status == 'waiting') {
+            return (
+                <div className="message">
+                    En attente joueur
+                    Lien : <strong>{window.location.href}</strong>
+                </div>
+            );
+        }
+>>>>>>> 24146e3ea280e959c43cea80e2475f682c3f2efb
 
         return (
             <div className="game">

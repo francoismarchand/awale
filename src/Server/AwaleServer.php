@@ -42,7 +42,6 @@ class AwaleServer implements MessageComponentInterface
         $this->sendGamePlayers($game);
 
         $this->entityManager->clear();
-        //TODO, on envoie la partie courante
         //TODO on signale à l'autre joueur que l'adversaire est connecté
     }
 
@@ -62,12 +61,18 @@ class AwaleServer implements MessageComponentInterface
         switch ($awaleDto->action) {
             case AwaleDto::ACTION_PLAY:
                 //TODO vérifier que les joueurs correspondent bien à la partie
+
+                if ($awaleDto->player != $game->getCurrentPlayer()) {
+                    echo \sprintf("Joueur differant (%s) (%s)\n", $awaleDto->player, $game->getCurrentPlayer());
+                    break;
+                }
+
                 $game = $this->awaleGame->play($game, $awaleDto->player, $awaleDto->case);
                 
-                //TODO on change le joueur courant
                 break;
 
             case AwaleDto::ACTION_READY:
+                //TODO détermine aléatoirement le joueur qui commence
                 break;
         }
 

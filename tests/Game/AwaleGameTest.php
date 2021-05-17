@@ -42,14 +42,22 @@ class AwaleGameTest extends KernelTestCase
                 'board' => [0, 5, 5, 0, 6, 5, 0, 2, 7, 6, 6, 6],
                 'boardExpected' => [0, 5, 0, 1, 7, 6, 1, 0, 7, 6, 6, 6],
                 'scoresExpected' => [3, 0]
+            ],[
+                'player' => Game::PLAYER_2,
+                'case' => 10,
+                'board' => [1, 1, 0, 0, 12, 0, 0, 1, 0, 1, 16, 11],
+                'boardExpected' => [0, 0, 0, 0, 13, 1, 1, 2, 1, 2, 0, 13],
+                'scoresExpected' => [0, 10]
             ]
         ];
 
         foreach ($tests as $test) {
             $game = new Game();
-            ;
+            $game->setBoard($test['board']);
+            $game->setCurrentPlayer($test['player']);
+            $game->setStatus(Game::STATUS_IN_PROGRESS);
             $game = $awaleGame->play(
-                $game->setBoard($test['board']), 
+                $game, 
                 $test['player'],
                 $test['case']
             );
@@ -58,4 +66,8 @@ class AwaleGameTest extends KernelTestCase
             $this->assertEquals($test['scoresExpected'], $game->getScores());
         }
     }
+
+    //TODO test win
+    //TODO test on no seeds to play
+    //TODO test
 }

@@ -50,8 +50,8 @@ class Game implements \JsonSerializable
     private $currentPlayer;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Player")
-    * @ORM\JoinColumn(name="winner_player_id", referencedColumnName="id", nullable=true)
+    * @ORM\ManyToOne(targetEntity="User")
+    * @ORM\JoinColumn(name="winner_user_id", referencedColumnName="id", nullable=true)
     */
     private $winner;
 
@@ -66,7 +66,7 @@ class Game implements \JsonSerializable
     private $board = [];
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $date_creation;
 
