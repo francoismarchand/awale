@@ -8,10 +8,10 @@ class AwaleGame
     const NB_CASES = 12;
 
     public function play(Game $game, int $player, int $case): Game
-    {
-        //TODO vérifications
-            //Biens les cases du joueurs courant
-            //case non vide
+    {   
+        if (!$this->invalidMove($game, $case)) {
+            return $game;
+        }
 
         $game = $this->move($game, $player, $case);
         $game = $this->changeCurrentPlayer($game);
@@ -79,10 +79,30 @@ class AwaleGame
         }
     }
 
+    private function invalidMove(Game $game, int $case): bool
+    {
+        if ($game->getStatus() == Game::STATUS_WAITING) {
+            return true;
+        }
+
+        if ($game->getCurrentPlayer() == Game::PLAYER_1 && $case > 5) {
+            return true;
+        }
+
+        if ($game->getCurrentPlayer() == Game::PLAYER_2 && $case < 6) {
+            return true;
+        }
+
+        if (empty($game->getBoard()[$case])) {
+            return true;
+        }
+
+        return false;
+    }
+
     private function calculateWinner(Game $game): Game
     {
         //TODO
-        //en fonction du board
         return $game;
     }
 }
