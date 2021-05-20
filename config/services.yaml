@@ -44,6 +44,6 @@ services:
         arguments:
             $awaleServerUrl: '%ws_awale_url%'
 
-    App\EventListener\ControllerListener:
+    App\Listener\ControllerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller }

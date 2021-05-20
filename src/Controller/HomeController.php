@@ -5,10 +5,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AccueilController extends AbstractController
+class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="accueil")
+     * @Route("/", name="home")
      */
     public function accueil(): Response
     {

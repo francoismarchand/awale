@@ -12,11 +12,14 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <h1><a href="{{ path('home') }}">Awale</a></h1>
+        </header>
         <main>
         {% block body %}{% endblock %}
         </main>
-        <div class="page-footer">
+        <footer class="page-footer">
             <a href="www.francoismarchand.fr">François Marchand</a>
-        </div>
+        </footer>
     </body>
 </html>

@@ -8,7 +8,7 @@ partie
 resultats
 IA
 page d'acueil
-    image d'awaler (en gros)
+    image d'awaler (en gros) (en dernier)
     lancer une partie (en gros)
     rechercher un adversaire (en gros)
 	mire de connexion/inscription (en moyen)

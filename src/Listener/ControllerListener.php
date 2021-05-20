@@ -1,5 +1,5 @@
 <?php
-namespace App\EventListener;
+namespace App\Listener;
 
 use App\Entity\User;
 use App\Factory\UserFactory;
