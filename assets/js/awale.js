@@ -46,7 +46,9 @@ class Game extends React.Component {
                     board: data.board,
                     scores: data.scores,
                     status: data.status,
-                    currentPlayer: data.currentPlayer
+                    currentPlayer: data.currentPlayer,
+                    players: data.players,
+                    winner: data.winner
                 });
                 
             };
@@ -69,6 +71,7 @@ class Game extends React.Component {
         if (this.state.status == 'waiting') {
             return (
                 <div className="message">
+                    <h2>En attente de l'adversaire.</h2>
                     <span className="game-link">
                         {window.location.href}
                     </span>
@@ -79,8 +82,31 @@ class Game extends React.Component {
             );
         }
 
+        let currentPlayerScore = this.state.scores[this.pointOfView];
+        let opponentScore = this.state.scores[this.pointOfView == 1 ? 0 : 1];
+        let message = (<p>Votre adversaire réfléchit...</p>);
+
+        if (this.state.players[this.state.currentPlayer] == this.props.player) {
+            message = (<strong>C'est votre tour</strong>);
+        }
+
+        if (this.state.status == 'finished') {
+            if (this.state.winner == this.props.player) {
+                message = (<strong>Vous avez gagné !</strong>);
+            } else {
+                message = (<strong>Votre adversaire a gagné la partie</strong>);
+            }
+        }
+        
+        console.log(this.props);
+        console.log(this.state);
+        
         return (
             <div className="game">
+                <div className="game-message">
+                    {message}
+                </div>
+                <data className="game-score game-score-opponent">{opponentScore}</data>
                 <div className="game-board">
                     <Board
                         pointOfView={this.pointOfView}
@@ -89,13 +115,7 @@ class Game extends React.Component {
                         onClick={index => this.onClick(index)}
                     />
                 </div>
-                <div className="game-info">
-                    <div>{this.state.status}</div>
-                    <div>Joueur 1 : {this.state.scores[0]}</div>
-                    <div>Joueur 2 : {this.state.scores[1]}</div>
-                    <div>Qui suis-je : {this.props.player}</div>
-                    <div>&Agrave; qui de jouer : {this.state.currentPlayer}</div>
-                </div>
+                <data className="game-score game-score-current">{currentPlayerScore}</data>
             </div>
         );
     }

@@ -207,6 +207,11 @@ class Game implements \JsonSerializable
             $player2 = $this->players[1]->getUser()->getId();
         }
 
+        $winnerId = null;
+        if (null !== $this->winner) {
+            $winnerId = $this->winner->getId();
+        }
+
         return [
             'status' => $this->status,
             'board' => $this->board,
@@ -215,7 +220,8 @@ class Game implements \JsonSerializable
                 $player1,
                 $player2
             ],
-            'currentPlayer' => $this->currentPlayer
+            'currentPlayer' => $this->currentPlayer,
+            'winner' => $winnerId
         ];
     }
 }
